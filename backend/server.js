@@ -5,6 +5,8 @@ require('dotenv').config();
 const userRoutes = require('./routes/userRoute');
 const searchRoutes = require('./routes/searchRoute');
 const reviewRoutes = require('./routes/reviewsRoute');
+const upload = require('./middleware/uploadMiddleware');
+const  uploadRoute = require('./routes/upload');
 
 // Initialiser l'app Express
 const app = express();
@@ -16,6 +18,7 @@ app.use(cors({
   credentials: true,
 }));
 app.use(express.json()); // Pour parser le JSON
+// app.use(express.static('uploads'));
 
 // Route de test
 app.get('/', (req, res) => {
@@ -24,15 +27,12 @@ app.get('/', (req, res) => {
 
 app.use('/api/users', userRoutes);
 app.use('/api/search', searchRoutes);
-app.use('/uploads', express.static('uploads'));
+app.use('/api/upload', uploadRoute);
 app.use('/api/reviews', reviewRoutes);
-
+ 
 
 // Connexion MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+mongoose.connect(process.env.MONGO_URI)
 .then(() => {
   console.log('✅ MongoDB connecté avec succès');
   app.listen(process.env.PORT || 5000, () => {

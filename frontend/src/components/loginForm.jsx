@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext"; // adapte ce chemin selon ton projet
+import { useAuth } from "../contexts/AuthContext"; 
 
 export default function LoginForm({ switchToSignup, onClose }) {
   const navigate = useNavigate();
-  const { login } = useAuth(); // ta fonction login du contexte
+  const { login } = useAuth(); 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -25,7 +25,7 @@ export default function LoginForm({ switchToSignup, onClose }) {
     const password = e.target.password.value;
 
     try {
-      const response = await fetch("http://localhost:5000/api/users/login", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -50,7 +50,7 @@ export default function LoginForm({ switchToSignup, onClose }) {
   if (user.role === "parent") {
     console.log("Redirection vers /complete-profile/parent");
     navigate("/complete-profile/parent");
-  } else if (user.role === "baby-sitter") {
+  } else if (user.role === "babysitter") {
     console.log("Redirection vers /complete-profile/babysitter");
     navigate("/complete-profile/babysitter");
   } else {
@@ -59,7 +59,7 @@ export default function LoginForm({ switchToSignup, onClose }) {
 } else if (user.role === "parent") {
   console.log("Redirection vers /parent/dashboard");
   navigate("/parent/dashboard");
-} else if (user.role === "baby-sitter") {
+} else if (user.role === "babysitter") {
   console.log("Redirection vers /baby-sitter/dashboard");
   navigate("/baby-sitter/dashboard");
 } else {

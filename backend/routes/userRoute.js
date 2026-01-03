@@ -74,9 +74,9 @@ router.put('/complete-profile', verifyToken, upload.single('photo'), completePro
 
 // Voir son profil
 router.get('/me', verifyToken, async (req, res) => {
-  console.log("req.user =", req.user);
+  //console.log("req.user =", req.user);
   try {
-    const user = await User.findById(req.user._id).select('-password');
+    const user = await User.findById(req.user.userId).select('-password');
     if (!user) return res.status(404).json({ message: 'Utilisateur non trouvé' });
 
     res.status(200).json({ user });
@@ -122,6 +122,8 @@ router.put('/me', verifyToken, async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+
 
 // ===========================
 // ✅ Admin : gestion des utilisateurs

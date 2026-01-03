@@ -3,13 +3,14 @@ import { colors, font } from "../styles/designSystem";
 import Modal from "../components/modal";
 import SignUpForm from "../components/signUpForm";
 import LoginForm from "../components/loginForm";
-import VerificationCodeForm from "../components/verificationCodeForm"; // ➕ Nouveau
+import VerificationCodeForm from "../components/verificationCodeForm";
+import { Link } from "react-router-dom"; // ➕ Pour utiliser les <Link>
 
 export default function Header({ logo }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showVerificationModal, setShowVerificationModal] = useState(false); // ➕ Nouveau
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
 
   const buttonStyle = {
     backgroundColor: "#FFD9B3",
@@ -19,14 +20,13 @@ export default function Header({ logo }) {
     textDecoration: "none",
     transition: "background-color 0.3s",
     display: "inline-block",
-    cursor: "pointer"
+    cursor: "pointer",
   };
 
   const handleHover = (e, isHover) => {
     e.currentTarget.style.backgroundColor = isHover ? "#FFB066" : "#FFD9B3";
   };
 
-  // Switch entre les modals
   const openLoginModal = () => {
     setShowSignUpModal(false);
     setShowLoginModal(true);
@@ -37,13 +37,11 @@ export default function Header({ logo }) {
     setShowSignUpModal(true);
   };
 
-  // ✅ Appelé après une inscription réussie
   const handleRegister = () => {
-    setShowSignUpModal(false); // Ferme l’inscription
-    setShowVerificationModal(true); // Ouvre la vérification
+    setShowSignUpModal(false);
+    setShowVerificationModal(true);
   };
 
-  // ✅ Appelé après vérification réussie
   const handleCodeSubmit = (code) => {
     console.log("Code vérifié :", code);
     setShowVerificationModal(false);
@@ -87,8 +85,16 @@ export default function Header({ logo }) {
 
         <nav className="nav-desktop hidden md:block">
           <ul className="nav-links flex gap-6 items-center">
-            <li><a href="/" className="text-gray-800 hover:text-orange-600">Accueil</a></li>
-            <li><a href="/about" className="text-gray-800 hover:text-orange-600">À propos</a></li>
+            <li>
+              <Link to="/" className="text-gray-800 hover:text-orange-600">
+                Accueil
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" className="text-gray-800 hover:text-orange-600">
+                À propos
+              </Link>
+            </li>
             <li>
               <span
                 style={buttonStyle}
@@ -113,12 +119,19 @@ export default function Header({ logo }) {
         </nav>
       </div>
 
-      {/* Menu mobile */}
       {isMobileMenuOpen && (
         <nav className="nav-mobile mt-4 md:hidden">
           <ul className="nav-links flex flex-col gap-4">
-            <li><a href="/" className="text-gray-800 hover:text-orange-600">Accueil</a></li>
-            <li><a href="/about" className="text-gray-800 hover:text-orange-600">À propos</a></li>
+            <li>
+              <Link to="/" className="text-gray-800 hover:text-orange-600">
+                Accueil
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" className="text-gray-800 hover:text-orange-600">
+                À propos
+              </Link>
+            </li>
             <li>
               <span
                 style={buttonStyle}
@@ -143,16 +156,15 @@ export default function Header({ logo }) {
         </nav>
       )}
 
-      {/* Modal d'inscription */}
+      {/* Modals */}
       <Modal isOpen={showSignUpModal} onClose={() => setShowSignUpModal(false)}>
         <SignUpForm
           switchToLogin={openLoginModal}
           onClose={() => setShowSignUpModal(false)}
-          onRegister={handleRegister} // ➕ Appelle handleRegister après l’inscription
+          onRegister={handleRegister}
         />
       </Modal>
 
-      {/* Modal de connexion */}
       <Modal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)}>
         <LoginForm
           switchToSignup={openSignUpModal}
@@ -160,7 +172,6 @@ export default function Header({ logo }) {
         />
       </Modal>
 
-      {/* Modal de vérification de code */}
       <Modal isOpen={showVerificationModal} onClose={() => setShowVerificationModal(false)}>
         <VerificationCodeForm
           onClose={() => setShowVerificationModal(false)}

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom'; // 👉 Importer le hook de redirection
 import Button from '../components/button';
-import Modal from '../components/modal'; // supposé que tu as ce composant
+import Modal from '../components/modal'; // Si tu veux le garder plus tard
 import { font } from '../styles/designSystem';
 
 const images = [
@@ -12,7 +13,7 @@ const images = [
 
 const HomeHero = () => {
   const [index, setIndex] = useState(0);
-  const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate(); // 👉 Hook pour rediriger
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -22,8 +23,9 @@ const HomeHero = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
+  const handleClick = () => {
+    navigate('/login'); // 👉 Redirection vers la page de login
+  };
 
   return (
     <section
@@ -45,9 +47,8 @@ const HomeHero = () => {
           Des profils vérifiés, notés et disponibles près de chez toi.
         </p>
 
-        {/* Bouton pour ouvrir modal */}
-        <Button onClick={openModal}>Trouver une baby-sitter</Button>
-
+        {/* ✅ Bouton qui redirige vers /login */}
+        <Button onClick={handleClick}>Trouver une baby-sitter</Button>
       </motion.div>
 
       {/* Slider images */}
@@ -72,19 +73,6 @@ const HomeHero = () => {
           </AnimatePresence>
         </div>
       </motion.div>
-
-      {/* Modal inscription / connexion */}
-      <Modal isOpen={modalOpen} onClose={closeModal}>
-        {/* Ici tu mets ton composant ou contenu d'inscription / connexion */}
-        <div className="p-6">
-          <h2 className="text-2xl font-bold mb-4" style={{ fontFamily: font.family }}>
-            S’inscrire / Se connecter
-          </h2>
-          {/* Exemple : formulaire, ou boutons, ou ce que tu veux */}
-          <p className="mb-4">Formulaire d'inscription et connexion ici...</p>
-          <Button label="Fermer" onClick={closeModal} />
-        </div>
-      </Modal>
     </section>
   );
 };

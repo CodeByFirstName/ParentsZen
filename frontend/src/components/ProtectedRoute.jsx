@@ -1,23 +1,24 @@
-// src/components/ProtectedRoute.jsx
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function ProtectedRoute() {
-  const { token, role, isProfileCompleted, loading } = useAuth();
+  const { token, role, isProfileComplete, loading } = useAuth();
 
   // Attendre que les infos soient chargées
   if (loading) return null;
 
-  // Si non connecté, redirige vers login
-  if (!token) return <Navigate to="/login" replace />;
+  // Si non connecté, redirige vers la page d'accueil
+  if (!token) return <Navigate to="/" replace />;
 
-  // Si profil non complété, redirige vers le bon formulaire
-  if (!isProfileCompleted) {
+  // Si tu veux forcer la complétion du profil, décommente ceci :
+  /*
+  if (!isProfileComplete) {
     return role === "parent"
       ? <Navigate to="/complete-profile/parent" replace />
       : <Navigate to="/complete-profile/babysitter" replace />;
   }
+  */
 
-  // Sinon, laisse passer vers les routes enfants
+  // Accès autorisé
   return <Outlet />;
 }

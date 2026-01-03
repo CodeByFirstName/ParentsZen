@@ -18,6 +18,7 @@ export default function ParentDashboard() {
   const [rating, setRating] = useState(5);
   const [showFilters, setShowFilters] = useState(false);
 
+  // Chargement initial des babysitters
   useEffect(() => {
     axios.get('/api/babysitters')
       .then((res) => {
@@ -28,6 +29,8 @@ export default function ParentDashboard() {
       .catch((err) => console.error('Erreur chargement babysitters', err));
   }, []);
 
+  
+  // Application des filtres
   useEffect(() => {
     let result = babysitters;
     if (search) {
@@ -45,7 +48,10 @@ export default function ParentDashboard() {
     axios.post('/api/parents/favorites', { babysitterId: id })
       .then(() => {
         const added = babysitters.find((b) => b.id === id);
-        setFavorites((prev) => [...prev, added]);
+        setFavorites((prev) => {
+          if (prev.some((b) => b.id === added.id)) return prev;
+          return [...prev, added];
+        });
       })
       .catch((err) => console.error("Erreur ajout favoris :", err));
   };
@@ -71,7 +77,6 @@ export default function ParentDashboard() {
           Bienvenue sur votre tableau de bord
         </h1>
 
-        {/* Bouton pour afficher les filtres */}
         {!showFilters && (
           <button
             onClick={() => {
@@ -84,9 +89,11 @@ export default function ParentDashboard() {
           </button>
         )}
 
-        {/* Filtres visibles uniquement si activés */}
         {showFilters && (
-          <form className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <form
+            onSubmit={(e) => e.preventDefault()}
+            className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"
+          >
             <Input
               placeholder="Rechercher une baby-sitter par nom..."
               value={search}
@@ -136,21 +143,32 @@ export default function ParentDashboard() {
                   <p className="text-sm text-textLight">
                     {b.city} • {b.experience} ans
                   </p>
-                  {b.averageRating && (
+                  {typeof b.averageRating === 'number' && (
                     <p className="text-sm text-yellow-500">
-                      ⭐ {b.averageRating.toFixed(1)} ({b.reviewCount} avis)
+                      ⭐ {b.averageRating.toFixed(1)} ({b.reviewCount ?? 0} avis)
                     </p>
                   )}
                 </div>
               </div>
               <div className="mt-4 flex flex-col gap-2">
-                <Button onClick={() => handleAddToFavorites(b.id)} variant="outline">
+                <Button
+                  onClick={() => handleAddToFavorites(b.id)}
+                  variant="outline"
+                  aria-label={`Ajouter ${b.name} aux favoris`}
+                >
                   <HeartIcon className="w-4 h-4 mr-2" /> Favoris
                 </Button>
-                <Button onClick={() => setContactModal(b)} variant="ghost">
+                <Button
+                  onClick={() => setContactModal(b)}
+                  variant="ghost"
+                  aria-label={`Contacter ${b.name}`}
+                >
                   <MessageSquareIcon className="w-4 h-4 mr-2" /> Contacter
                 </Button>
-                <Button onClick={() => setReviewModal(b)}>
+                <Button
+                  onClick={() => setReviewModal(b)}
+                  aria-label={`Laisser un avis pour ${b.name}`}
+                >
                   <StarIcon className="w-4 h-4 mr-2" /> Avis
                 </Button>
               </div>
@@ -158,7 +176,6 @@ export default function ParentDashboard() {
           ))}
         </div>
 
-        {/* Favoris */}
         {favorites.length > 0 && (
           <div className="mt-12">
             <h2 className="text-2xl font-bold mb-4">Mes favoris</h2>
@@ -173,7 +190,6 @@ export default function ParentDashboard() {
           </div>
         )}
 
-        {/* Profil (placeholder) */}
         <div className="mt-12 border-t pt-6">
           <h2 className="text-xl font-bold mb-2">Mon profil</h2>
           <Button variant="outline" className="mr-4">Modifier mes infos</Button>

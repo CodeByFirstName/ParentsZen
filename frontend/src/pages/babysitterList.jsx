@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import Card from '../components/card';
 import SectionTitle from '../components/SectionTitle';
@@ -7,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function BabysitterList() {
+    const navigate = useNavigate(); 
   const [search, setSearch] = useState('');
   const [maxBudget, setMaxBudget] = useState('');
   const [filters, setFilters] = useState({
@@ -25,14 +27,14 @@ export default function BabysitterList() {
       try {
         const token = localStorage.getItem('token');
           
-        const res = await fetch('http://localhost:5000/api/users/babysitters', {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/babysitters`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error(`Erreur serveur: ${res.status}`);
         const data = await res.json();
         setBabysitters(data);
 
-        const favRes = await fetch('http://localhost:5000/api/users/favorites', {
+        const favRes = await fetch(`${import.meta.env.VITE_API_URL}/api/users/favorites`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!favRes.ok) throw new Error(`Erreur serveur: ${favRes.status}`);
@@ -55,7 +57,7 @@ const toggleFavorite = async (babysitterId) => {
   const isFav = favorites.includes(babysitterId);
 
   try {
-    const url = `http://localhost:5000/api/users/favorites/${babysitterId}`;
+    const url = `${import.meta.env.VITE_API_URL}/api/users/favorites/${babysitterId}`;
     console.log("URL appelée:", url); // 👈 ajoute ça
     const options = {
       method: isFav ? 'DELETE' : 'POST',
@@ -166,7 +168,8 @@ const toggleFavorite = async (babysitterId) => {
     description={item.description}
     babysitterId={item.id}
     initialIsFavorite={item.isFavorite}
-    onActionClick={() => alert(`Profil de ${item.nom}`)}
+    onActionClick={() => navigate(`/parent/dashboard/babysitters/${item.id}`)}
+
     actionLabel="Voir profil"
     onToggleFavorite={toggleFavorite}
             />

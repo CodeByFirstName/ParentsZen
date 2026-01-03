@@ -46,7 +46,7 @@ export default function SignUpForm({ switchToLogin, onClose, onRegister }) {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/users/register", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -195,7 +195,7 @@ export default function SignUpForm({ switchToLogin, onClose, onRegister }) {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            placeholder="ex : +229 90 00 00 00"
+            placeholder="ex : 01 90 00 00 00"
             required
             className="mb-4 mt-1 p-3 rounded-lg border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-gray-600"
           />

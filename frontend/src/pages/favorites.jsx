@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import Card from '../components/card';
 import SectionTitle from '../components/SectionTitle';
@@ -5,7 +6,9 @@ import { font } from '../styles/designSystem';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 export default function FavoritesList() {
+         const navigate = useNavigate();
   const [babysitters, setBabysitters] = useState([]);
   const [favorites, setFavorites] = useState([]);
 
@@ -17,14 +20,14 @@ export default function FavoritesList() {
         if (!token) throw new Error('Utilisateur non authentifié');
 
         // Récupérer la liste complète des babysitters
-        const res = await fetch('http://localhost:5000/api/users/babysitters', {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/babysitters`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error(`Erreur serveur babysitters : ${res.status}`);
         const data = await res.json();
 
         // Récupérer la liste des favoris (ids)
-        const favRes = await fetch('http://localhost:5000/api/users/favorites', {
+        const favRes = await fetch(`${import.meta.env.VITE_API_URL}/api/users/favorites`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!favRes.ok) throw new Error(`Erreur serveur favoris : ${favRes.status}`);
@@ -53,7 +56,7 @@ export default function FavoritesList() {
     const isFav = favorites.includes(babysitterId);
 
     try {
-      const url = `http://localhost:5000/api/users/favorites/${babysitterId}`;
+      const url = `${import.meta.env.VITE_API_URL}/api/users/favorites/${babysitterId}`;
       const options = {
         method: isFav ? 'DELETE' : 'POST',
         headers: {
@@ -118,7 +121,7 @@ export default function FavoritesList() {
               description={item.description}
               babysitterId={item.id}
               initialIsFavorite={item.isFavorite}
-              onActionClick={() => alert(`Profil de ${item.nom}`)}
+              onActionClick={() => navigate(`/parent/dashboard/babysitters/${item.id}`)}
               actionLabel="Voir profil"
               onToggleFavorite={toggleFavorite}
             />

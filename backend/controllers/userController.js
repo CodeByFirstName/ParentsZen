@@ -69,7 +69,9 @@ const register = async (req, res) => {
 };
 
 const completeProfile = async (req, res) => {
-  const userId = req.user._id;
+  const userId = req.user.userId;
+  console.log("Fichier reçu :", req.file); 
+
   
 
 
@@ -105,6 +107,7 @@ const completeProfile = async (req, res) => {
     }
 
     if (user.role === 'babysitter') {
+      
       const babysitterProfile = {
         photo: photoPath,
         location: req.body.location,
@@ -145,6 +148,7 @@ const completeProfile = async (req, res) => {
 
     res.status(200).json({ message: "Profil complété avec succès.", user: updatedUser });
   } catch (error) {
+    console.error("Erreur dans completeProfile:", error);
     res.status(500).json({ message: "Erreur serveur", error: error.message });
   }
 };

@@ -19,7 +19,7 @@ export default function VerificationCodeForm({ onClose }) {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:5000/api/users/verify-code", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/verify-code`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, code }),
@@ -38,7 +38,7 @@ export default function VerificationCodeForm({ onClose }) {
 
   const handleResendCode = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/users/resend-code", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/resend-code`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

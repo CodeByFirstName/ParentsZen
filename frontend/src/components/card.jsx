@@ -37,6 +37,7 @@ const Card = ({
     }
   }, [animateHeart]);
   const handleViewProfile = () => {
+    console.log("babysitterId :", babysitterId);
     navigate(`/parent/dashboard/babysitters/${babysitterId}`);
   };
 
@@ -89,7 +90,8 @@ const Card = ({
         <p className="text-gray-600 text-sm">{description}</p>
         <div className="pt-4">
           <button
-            onClick={onActionClick || handleViewProfile}
+            onClick={onActionClick ? () => onActionClick() : handleViewProfile}
+
             className="bg-gradient-to-r from-orange-200 to-orange-400 text-white font-semibold py-2 px-4 rounded-full shadow-md hover:from-orange-300 hover:to-orange-500 transition duration-300 w-full text-sm"
           >
             {actionLabel}

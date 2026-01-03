@@ -1,10 +1,14 @@
 const review = require('../models/review');
 const Review = require('../models/review');
 const User = require('../models/user');
+const mongoose = require('mongoose');
+
 
 exports.createReview = async (req, res) => {
   try {
-    const { babysitterId, rating, comment } = req.body;
+const { babysitterId } = req.params;
+const { rating, comment } = req.body;
+
 
     // Vérification du rôle utilisateur
     if (req.user.role !== 'parent') {
@@ -20,7 +24,7 @@ exports.createReview = async (req, res) => {
      // ✅ Vérifier si ce parent a déjà laissé un avis pour ce baby-sitter
      const existingReview = await Review.findOne({
         babysitter: babysitterId,
-        parent: req.user.userId
+        parent: new mongoose.Types.ObjectId(req.user.userId)
       });
       if (existingReview) {
         return res.status(400).json({ message: "Vous avez déjà laissé un avis pour ce baby-sitter." });
@@ -46,6 +50,8 @@ exports.createReview = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur" });
   }
 };
+
+
 exports.getReviewsByBabysitter = async (req, res) => {
     try {
       const { babysitterId } = req.params;

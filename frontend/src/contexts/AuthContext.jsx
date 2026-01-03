@@ -9,69 +9,86 @@ export function AuthProvider({ children }) {
   const [isProfileComplete, setIsProfileComplete] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    const storedRole = localStorage.getItem("role");
+useEffect(() => {
+  const storedToken = localStorage.getItem("token");
+  const storedRole = localStorage.getItem("role");
 
-    if (storedToken && storedRole) {
-      setToken(storedToken);
-      setRole(storedRole);
+  if (storedToken && storedRole) {
+    console.log("🔐 AuthContext init avec token et rôle");
 
-      fetch("http://localhost:5000/api/users/me", {
-        headers: { Authorization: `Bearer ${storedToken}` },
+    setToken(storedToken);
+    setRole(storedRole);
+
+    // On attend d'avoir les infos du serveur avant de décider si le profil est complet
+    fetch(`${import.meta.env.VITE_API_URL}/api/users/me`, {
+      headers: { Authorization: `Bearer ${storedToken}` },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Échec de la récupération du profil");
+        return res.json();
       })
-        .then((res) => {
-          if (!res.ok) throw new Error("Échec de la récupération du profil");
-          return res.json();
-        })
-        .then((data) => {
-          const complete = data.profileCompleted === true; // attention au "d"
-          setIsProfileComplete(complete);
-          localStorage.setItem("isProfileComplete", complete.toString());
-        })
-        .catch((err) => {
-          console.error("Erreur AuthContext:", err);
-          const cachedComplete = localStorage.getItem("isProfileComplete") === "true";
-          setIsProfileComplete(cachedComplete);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    } else {
-      setLoading(false);
-    }
-  }, []);
+      .then((data) => {
+        const complete = data.profileCompleted === true;
+        console.log("✅ Profil récupéré via useEffect:", complete);
 
-  const login = async (token, role) => {
+        setIsProfileComplete(complete);
+        localStorage.setItem("isProfileComplete", complete.toString());
+      })
+      .catch((err) => {
+        console.error("❌ Erreur AuthContext (fetch profile):", err);
+        // Si l’appel échoue, mieux vaut bloquer l’accès
+        setIsProfileComplete(false);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  } else {
+    setLoading(false);
+  }
+}, []);
+
+
+  const login = async (token, role, profileCompleted = null) => {
     try {
+      console.log("🔓 login() appelé");
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
 
       setToken(token);
       setRole(role);
 
-      // On récupère les infos du profil pour savoir si c'est complet
-      const res = await fetch("http://localhost:5000/api/users/me", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      let complete;
 
-      if (!res.ok) {
-        throw new Error("Échec de la récupération du profil après login");
+      if (profileCompleted !== null) {
+        complete = profileCompleted === true;
+        console.log("⚡ login: profil fourni depuis réponse login:", complete);
+      } else {
+        console.log("📡 login: appel à /api/users/me pour récupérer le profil");
+
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/me`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (!res.ok) {
+          throw new Error("Échec de la récupération du profil après login");
+        }
+
+        const data = await res.json();
+        complete = data.profileCompleted === true;
+        console.log("📥 login: profil récupéré depuis /api/users/me:", complete);
       }
 
-      const data = await res.json();
-      const complete = data.profileCompleted === true;
       setIsProfileComplete(complete);
       localStorage.setItem("isProfileComplete", complete.toString());
     } catch (err) {
-      console.error("Erreur login():", err);
-      // En cas d'erreur, on suppose profil incomplet par sécurité
+      console.error("❌ Erreur login():", err);
       setIsProfileComplete(false);
       localStorage.setItem("isProfileComplete", "false");
     }
   };
 
   const logout = () => {
+    console.log("🚪 Déconnexion");
     localStorage.clear();
     setToken(null);
     setRole(null);
@@ -80,7 +97,7 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ token, role, isProfileComplete, login, logout, loading }}
+      value={{ token, role, isProfileComplete,setIsProfileComplete, login, logout, loading }}
     >
       {children}
     </AuthContext.Provider>

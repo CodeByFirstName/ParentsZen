@@ -35,12 +35,13 @@ async function seedUsers() {
         password: await hashPassword("password123"),
         role: "babysitter",
         gender: "Femme",
+         profileCompleted: true,
         babysitterProfile: {
           location: "Cotonou",
           hourlyRate: 3000,
           skills: ["repas", "soins", "lecture"],
           experience: "3",
-          photo: defaultImage,
+           photo: "https://res.cloudinary.com/dimcjxxfh/image/upload/v1748389913/default.jpg",
           availability: [
             { day: "Samedi", startTime: "08:00", endTime: "18:00" }
           ]
@@ -52,12 +53,13 @@ async function seedUsers() {
         password: await hashPassword("password123"),
         role: "babysitter",
         gender: "Femme",
+         profileCompleted: true,
         babysitterProfile: {
           location: "Porto-Novo",
           hourlyRate: 2500,
           skills: ["langue", "lecture", "jeux"],
           experience: "2",
-          photo: defaultImage,
+           photo: "https://res.cloudinary.com/dimcjxxfh/image/upload/v1748389913/default.jpg",
           availability: [
             { day: "Dimanche", startTime: "09:00", endTime: "17:00" }
           ]
@@ -69,12 +71,13 @@ async function seedUsers() {
         password: await hashPassword("password123"),
         role: "babysitter",
         gender: "Femme",
+         profileCompleted: true,
         babysitterProfile: {
           location: "Cotonou",
           hourlyRate: 3200,
           skills: ["soins", "jeux", "lecture"],
           experience: "4",
-          photo: defaultImage,
+           photo: "https://res.cloudinary.com/dimcjxxfh/image/upload/v1748389913/default.jpg",
           availability: [
             { day: "Samedi", startTime: "10:00", endTime: "19:00" }
           ]
@@ -86,12 +89,13 @@ async function seedUsers() {
         password: await hashPassword("password123"),
         role: "babysitter",
         gender: "Femme",
+         profileCompleted: true,
         babysitterProfile: {
           location: "Porto-Novo",
           hourlyRate: 1900,
           skills: ["jeux", "lecture", "langue"],
           experience: "1",
-          photo: defaultImage,
+           photo: "https://res.cloudinary.com/dimcjxxfh/image/upload/v1748389913/default.jpg",
           availability: [
             { day: "Vendredi", startTime: "14:00", endTime: "20:00" }
           ]
@@ -103,12 +107,13 @@ async function seedUsers() {
         password: await hashPassword("password123"),
         role: "babysitter",
         gender: "Femme",
+         profileCompleted: true,
         babysitterProfile: {
           location: "Cotonou",
           hourlyRate: 2400,
           skills: ["langue", "jeux", "soins"],
           experience: "2",
-          photo: defaultImage,
+           photo: "https://res.cloudinary.com/dimcjxxfh/image/upload/v1748389913/default.jpg",
           availability: [
             { day: "Mercredi", startTime: "07:00", endTime: "12:00" }
           ]
@@ -120,12 +125,13 @@ async function seedUsers() {
         password: await hashPassword("password123"),
         role: "babysitter",
         gender: "Femme",
+         profileCompleted: true,
         babysitterProfile: {
           location: "Porto-Novo",
           hourlyRate: 2300,
           skills: ["repas", "activités créatives", "jeux"],
           experience: "3",
-          photo: defaultImage,
+           photo: "https://res.cloudinary.com/dimcjxxfh/image/upload/v1748389913/default.jpg",
           availability: [
             { day: "Samedi", startTime: "08:00", endTime: "16:00" }
           ]
@@ -137,12 +143,13 @@ async function seedUsers() {
         password: await hashPassword("password123"),
         role: "babysitter",
         gender: "Femme",
+         profileCompleted: true,
         babysitterProfile: {
           location: "Cotonou",
           hourlyRate: 1700,
           skills: ["soins", "jeux", "langue"],
           experience: "1",
-          photo: defaultImage,
+           photo: "https://res.cloudinary.com/dimcjxxfh/image/upload/v1748389913/default.jpg",
           availability: [
             { day: "Dimanche", startTime: "10:00", endTime: "18:00" }
           ]
@@ -154,12 +161,13 @@ async function seedUsers() {
         password: await hashPassword("password123"),
         role: "babysitter",
         gender: "Femme",
+         profileCompleted: true,
         babysitterProfile: {
           location: "Bohicon",
           hourlyRate: 2600,
           skills: ["repas", "jeux", "lecture"],
           experience: "2",
-          photo: defaultImage,
+           photo: "https://res.cloudinary.com/dimcjxxfh/image/upload/v1748389913/default.jpg",
           availability: [
             { day: "Samedi", startTime: "08:00", endTime: "18:00" }
           ]
@@ -171,12 +179,13 @@ async function seedUsers() {
         password: await hashPassword("password123"),
         role: "babysitter",
         gender: "Femme",
+         profileCompleted: true,
         babysitterProfile: {
           location: "Cotonou",
           hourlyRate: 1800,
           skills: ["jeux", "lecture", "activités créatives"],
           experience: "1",
-          photo: defaultImage,
+           photo: "https://res.cloudinary.com/dimcjxxfh/image/upload/v1748389913/default.jpg",
           availability: [
             { day: "Lundi", startTime: "13:00", endTime: "18:00" }
           ]
@@ -188,12 +197,13 @@ async function seedUsers() {
         password: await hashPassword("password123"),
         role: "babysitter",
         gender: "Femme",
+         profileCompleted: true,
         babysitterProfile: {
           location: "Porto-Novo",
           hourlyRate: 2300,
           skills: ["repas", "langue", "lecture"],
           experience: "3",
-          photo: defaultImage,
+           photo: "https://res.cloudinary.com/dimcjxxfh/image/upload/v1748389913/default.jpg",
           availability: [
             { day: "Samedi", startTime: "09:00", endTime: "17:00" }
           ]
@@ -209,7 +219,7 @@ async function seedUsers() {
           location: "Cotonou",
           numberOfChildren: 2,
           budget: 3247,
-          photo: defaultImage,
+           photo: "https://res.cloudinary.com/dimcjxxfh/image/upload/v1748389913/default.jpg",
           availability: [
             { day: "Samedi", startTime: "08:00", endTime: "18:00" }
           ],
@@ -227,7 +237,7 @@ async function seedUsers() {
           location: "Porto-Novo",
           numberOfChildren: 2,
           budget: 2714,
-          photo: defaultImage,
+           photo: "https://res.cloudinary.com/dimcjxxfh/image/upload/v1748389913/default.jpg",
           availability: [
             { day: "Samedi", startTime: "08:00", endTime: "18:00" }
           ],
@@ -245,7 +255,7 @@ async function seedUsers() {
           location: "Cotonou",
           numberOfChildren: 1,
           budget: 2497,
-          photo: defaultImage,
+           photo: "https://res.cloudinary.com/dimcjxxfh/image/upload/v1748389913/default.jpg",
           availability: [
             { day: "Dimanche", startTime: "09:00", endTime: "17:00" }
           ],
@@ -263,7 +273,7 @@ async function seedUsers() {
           location: "Parakou",
           numberOfChildren: 3,
           budget: 2807,
-          photo: defaultImage,
+          photo: "https://res.cloudinary.com/dimcjxxfh/image/upload/v1748389913/default.jpg",
           availability: [
             { day: "Mercredi", startTime: "07:00", endTime: "13:00" }
           ],
@@ -281,7 +291,7 @@ async function seedUsers() {
           location: "Cotonou",
           numberOfChildren: 2,
           budget: 2154,
-          photo: defaultImage,
+           photo: "https://res.cloudinary.com/dimcjxxfh/image/upload/v1748389913/default.jpg",
           availability: [
             { day: "Vendredi", startTime: "14:00", endTime: "20:00" }
           ],
@@ -299,7 +309,7 @@ async function seedUsers() {
           location: "Porto-Novo",
           numberOfChildren: 3,
           budget: 2534,
-          photo: defaultImage,
+           photo: "https://res.cloudinary.com/dimcjxxfh/image/upload/v1748389913/default.jpg",
           availability: [
             { day: "Lundi", startTime: "09:00", endTime: "15:00" }
           ],
@@ -317,7 +327,7 @@ async function seedUsers() {
           location: "Porto-Novo",
           numberOfChildren: 3,
           budget: 3126,
-          photo: defaultImage,
+           photo: "https://res.cloudinary.com/dimcjxxfh/image/upload/v1748389913/default.jpg",
           availability: [
             { day: "Samedi", startTime: "08:00", endTime: "16:00" }
           ],

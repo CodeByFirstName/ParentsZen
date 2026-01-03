@@ -2,12 +2,12 @@ import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { colors } from '../styles/designSystem';
 import { useAuth } from '../contexts/AuthContext';
 
+// Paramètres supprimé ici
 const menuItems = [
   { path: 'babysitters', label: 'Baby-sitters', icon: '👩‍🍼' },
   { path: 'favoris', label: 'Mes favoris', icon: '❤️' },
   { path: 'avis', label: 'Mes avis', icon: '📝' },
   { path: 'profil', label: 'Mon profil', icon: '👤' },
-  { path: 'settings', label: 'Paramètres', icon: '⚙️' },
 ];
 
 export default function DashboardLayout() {
@@ -17,7 +17,7 @@ export default function DashboardLayout() {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate('/');
   };
 
   return (
@@ -47,7 +47,6 @@ export default function DashboardLayout() {
                     position: 'relative',
                   }}
                 >
-                  {/* Barre gauche visible si actif ou hover */}
                   <span
                     className="absolute left-0 top-0 h-full w-1 rounded-r transition-all duration-200 group-hover:bg-[color:var(--bar-color)]"
                     style={{
