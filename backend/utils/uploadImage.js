@@ -1,12 +1,15 @@
 import { v2 as cloudinary } from 'cloudinary';
 import fs from 'fs';
 import path from 'path';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Configuration
 cloudinary.config({
-  cloud_name: 'dimcjxfth', // le tien
-  api_key: '153463472815561', // le tien
-  api_secret: 'yBBZhND_Mn70nq01O8RwCwNEffY', // remplace avec la vraie clé
+  cloud_name: process.env.cloud_name,
+  api_key: process.env.api_key,
+  api_secret: process.env.api_secret,
 });
 
 // Dossier contenant les images à uploader
