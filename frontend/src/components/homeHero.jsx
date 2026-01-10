@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom'; // 👉 Importer le hook de redirection
+import { useNavigate } from 'react-router-dom';
 import Button from '../components/button';
-import Modal from '../components/modal'; // Si tu veux le garder plus tard
+import Modal from '../components/modal';
 import { font } from '../styles/designSystem';
 
 const images = [
@@ -13,7 +13,7 @@ const images = [
 
 const HomeHero = () => {
   const [index, setIndex] = useState(0);
-  const navigate = useNavigate(); // 👉 Hook pour rediriger
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -24,7 +24,7 @@ const HomeHero = () => {
   }, []);
 
   const handleClick = () => {
-    navigate('/login'); // 👉 Redirection vers la page de login
+    navigate('/login');
   };
 
   return (
@@ -39,15 +39,15 @@ const HomeHero = () => {
         transition={{ duration: 1 }}
         className="max-w-xl z-10"
       >
-        <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight mb-6">
+        <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-gray-800 leading-tight mb-4 md:mb-6">
           Trouve une baby-sitter de confiance <br className="hidden md:block" />
           en quelques clics
         </h1>
-        <p className="text-lg text-gray-600 mb-8">
+        <p className="text-sm sm:text-base md:text-lg text-gray-600 mb-6 md:mb-8">
           Des profils vérifiés, notés et disponibles près de chez toi.
         </p>
 
-        {/* ✅ Bouton qui redirige vers /login */}
+        {/* Bouton qui redirige vers /login */}
         <Button onClick={handleClick}>Trouver une baby-sitter</Button>
       </motion.div>
 
