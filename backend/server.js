@@ -14,7 +14,7 @@ const app = express();
 // Middlewares globaux
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://ton-app.onrender.com' // 👈 Tu changeras ça après déploiement
+  'https://parentszen.onrender.com/' // 👈 Tu changeras ça après déploiement
 ];
 
 app.use(cors({
